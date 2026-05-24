@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0A0A0A;
+  --card: #111111;
+  --card-hover: #161616;
+  --border: #1F1F1F;
+  --text-primary: #F5F5F5;
+  --text-secondary: #A1A1AA;
+  --accent: #10B981;
+  --loss: #EF4444;
+  --warning: #F59E0B;
+  --glass: rgba(17, 17, 17, 0.85);
+}
+
+body {
+  font-family: var(--font-geist);
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+}
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.2s cubic-bezier(0.23, 1.0, 0.32, 1);
+}
+
+.card:hover {
+  background-color: var(--card-hover);
+  border-color: #2A2A2A;
+}
+
+.metric-value {
+  font-variant-numeric: tabular-nums;
+}
+
+input, select, textarea {
+  background-color: #0F0F0F;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #0A0A0A;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  background-color: #34D399;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  background-color: #1A1A1A;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
