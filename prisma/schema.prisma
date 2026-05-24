@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Easy for local dev. Change to postgresql for production
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String?  @unique
+  createdAt     DateTime @default(now())
+  trades        Trade[]
+  stats         UserStats?
+}
+
+model Trade {
+  id                  String   @id @default(cuid())
+  userId              String
+  pair                String
+  market              String
+  direction           String
+  entryTime           DateTime
+  exitTime            DateTime?
+  entryPrice          Float
+  stopLoss            Float
+  takeProfit          Float
+  riskPercent         Float
+  positionSize        Float
+  leverage            Float
+  session             String
+
+  // Strategy / ICT
+  setupType           String?
+  marketStructure     String?
+  liquidityConcepts   String?
+  confirmationModel   String?
+  timeframeAlignment  String?
+  biasReasoning       String?
+
+  // Psychology
+  confidenceLevel     Int
+  emotionalState      String
+  disciplineScore     Int
+  fomoDetected        Boolean  @default(false)
+  revengeTrade        Boolean  @default(false)
+  patienceRating      Int
+
+  // Outcome
+  pnl                 Float
+  rrAchieved          Float
+  exitReason          String?
+  notes               String?
+
+  createdAt           DateTime @default(now())
+  media               Media[]
+
+  user                User     @relation(fields: [userId], references: [id])
+}
+
+model Media {
+  id        String @id @default(cuid())
+  tradeId   String
+  url       String // base64 or uploaded url
+  type      String // image
+  createdAt DateTime @default(now())
+  trade     Trade  @relation(fields: [tradeId], references: [id])
+}
+
+model UserStats {
+  id                String @id @default(cuid())
+  userId            String @unique
+  totalTrades       Int    @default(0)
+  winRate           Float  @default(0)
+  currentStreak     Int    @default(0)
+  bestStreak        Int    @default(0)
+  consistencyScore  Float  @default(0)
+  level             Int    @default(1)
+  disciplineScore   Float  @default(0)
+  lastUpdated       DateTime @default(now())
+  user              User   @relation(fields: [userId], references: [id])
+}
+
+model AIInsight {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  message   String
+  severity  String
+  createdAt DateTime @default(now())
+}
